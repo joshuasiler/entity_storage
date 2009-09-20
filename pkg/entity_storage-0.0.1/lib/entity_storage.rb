@@ -5,7 +5,7 @@ require 'rubygems'
 require 'activerecord'
 
 module EntityStorage
-  VERSION = '1.0.0'
+  VERSION = '1.0.1'
   
   class Storage
     attr_accessor :defaults

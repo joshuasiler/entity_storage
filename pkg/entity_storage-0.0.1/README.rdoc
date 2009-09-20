@@ -4,33 +4,14 @@ http://github.com/eatenbyagrue/entity_storage
 
 == DESCRIPTION:
 
-An easy to use, ActiveRecord-based Key/Value store for any Rails project. Designed to store config values & application wide state that need to survive server restarts.
+An easy to use, persistent Key/Value store for any Ruby on Rails project. Designed to store config values & application wide state that need to survive server restarts.
 
-== FEATURES/PROBLEMS:
-
-Provides an set of functions that allow quickly and safely setting and getting key/value pairs from the database.
-
-Allows users to set a list of default keys that auto-initiliazes baseline key/value pairs in the database.
+Additionally, allows users to set a list of default keys that auto-initiliazes baseline key/value pairs in the database for easy initialization.
 
 == SYNOPSIS:
 
-Put the following at the bottom of your environment.rb file, or in an initializer.
-
-    require 'entity_storage'
-    DEFAULT_KEYS = { "testkey" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false }
-    EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS) 
-
-On initialization, if the table "entity_storage" doesn't exist, it will be created. If you already have a table with that name, it must be in the correct format (previously created by this gem.)
-
-You can pass a hash full of default key/value pairs. If the application accesses one of the keys, and it doesn't already exist, it will initiliaze that key with the default value. Good for getting your app to an intial starting state.
-
-Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. 
-
 You can use the entity store like so:
-
-    # delete an item
-    EntityStore.delete(key)
-      
+     
     # Get key value. If it doesn't exist and is specified in default list, will be initialized and returned. If not in default list, will return nil.
     e = EntityStore["testkey"]
     e = EntityStore.testkey
@@ -46,16 +27,32 @@ You can use the entity store like so:
    
     # set it back to default
     EntityStore.default!(:testkey)
+    
+    # delete an item
+    EntityStore.delete(key)
 
 All EntityStorage operations sync immediately with the database, so a server shutdown will not impact stored values. 
 
+Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database.
+
 == REQUIREMENTS:
 
-Requires ActiveRecord 2.2.3 or above.
+Requires ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.)
 
 == INSTALL:
 
 sudo gem install entity_storage
+
+Put the following at the bottom of your environment.rb file, or in an initializer.
+
+    require 'entity_storage'
+    DEFAULT_KEYS = { "testkey" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false }
+    EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS) 
+
+On initialization, if the table "entity_storage" doesn't exist, it will be created. If you already have a table with that name, it must be in the correct format (previously created by this gem.)
+
+You can pass a hash full of default key/value pairs. If the application accesses one of the keys, and it doesn't already exist, it will initiliaze that key with the default value. Good for getting your app to an intial starting state.
+
 
 == LICENSE:
 

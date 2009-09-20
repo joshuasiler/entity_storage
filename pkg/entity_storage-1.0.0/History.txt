@@ -1,4 +1,8 @@
+=== 1.0.1 2009-09-20
+* documentation update
+
 === 1.0.0 2009-09-19
 
 * 1 major enhancement:
   * Initial release
+ 
