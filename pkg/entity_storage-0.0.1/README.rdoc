@@ -40,8 +40,19 @@ Keys can be up to 512 characters in length. Values can be practically any size, 
 Requires ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.)
 
 == INSTALL:
+To install from github:
 
-sudo gem install entity_storage
+    Run the following if you haven't already:
+    
+    gem sources -a http://gems.github.com
+    
+    Install the gem(s):
+    
+    sudo gem install eatenbyagrue-entity_storage
+
+Or download the souce above and run, customized for version and environment:
+
+    sudo gem install PATH/entity_storage.#.#.#.gem 
 
 Put the following at the bottom of your environment.rb file, or in an initializer.
 
