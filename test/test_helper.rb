@@ -1,0 +1,6 @@
+require 'stringio'
+require 'test/unit'
+require 'rubygems'
+require 'active_record'
+require 'active_support'
+require File.dirname(__FILE__) + '/../lib/entity_storage'

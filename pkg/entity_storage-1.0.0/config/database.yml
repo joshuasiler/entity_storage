@@ -1,0 +1,8 @@
+
+    adapter: mysql
+    database: 
+    username: root
+    password: 
+    host: localhost
+
+
