@@ -12,7 +12,8 @@ Additionally, allows users to set a list of default keys that auto-initiliazes b
 
 You can use the entity store like so:
      
-    # Get key value. If it doesn't exist and is specified in default list, will be initialized and returned. If not in default list, will return nil.
+    # Get key value. If it doesn't exist and is specified in default list, will be initialized and returned.
+    # If not in default list, will return nil.
     e = EntityStore["testkey"]
     e = EntityStore.testkey
     e = EntityStore[:testkey]
