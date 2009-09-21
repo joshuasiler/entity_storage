@@ -4,16 +4,17 @@ http://github.com/eatenbyagrue/entity_storage
 
 == DESCRIPTION:
 
-An easy to use, persistent Key/Value store for any Ruby on Rails project. Designed to store config values & application wide state that need to survive server restarts.
+An easy to use Key/Value store for any Ruby on Rails project. Like Memcache, only persistent. Stores config values &amp; application wide state in the database in order to survive server restarts.
 
-Additionally, allows users to set a list of default keys that auto-initiliazes baseline key/value pairs in the database for easy initialization.
+Designed to allow you to add persistent value storage to any Rails project in about 5 minutes.
+
+Additionally, allows users to set a list of default keys that auto-initializes baseline key/value pairs in the database for easy initialization.
 
 == SYNOPSIS:
 
 You can use the entity store like so:
      
-    # Get key value. If it doesn't exist and is specified in default list, will be initialized and returned.
-    # If not in default list, will return nil.
+    # Get key value. 
     e = EntityStore["testkey"]
     e = EntityStore.testkey
     e = EntityStore[:testkey]
@@ -32,7 +33,9 @@ You can use the entity store like so:
     # delete an item
     EntityStore.delete(key)
 
-All EntityStorage operations sync immediately with the database, so a server shutdown will not impact stored values. 
+All EntityStorage operations sync immediately with the database, so a server shutdown will not impact stored values.
+
+If you access a key that doesn't exist, and is specified in default list, will be initialized and returned. If not in default list, will return nil.
 
 Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database.
 
