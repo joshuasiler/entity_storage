@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+	<title>eatenbyagrue/entity_storage @ GitHub</title>
+	
+	<style type="text/css">
+		body {
+  		margin-top: 1.0em;
+  		background-color: #2d2695;
+		  font-family: "Helvetica,Arial,FreeSans"; 
+  		color: #ffffff;
+    }
+    #container {
+      margin: 0 auto;
+      width: 700px;
+    }
+		h1 { font-size: 3.8em; color: #d2d96a; margin-bottom: 3px; }
+		h1 .small { font-size: 0.4em; }
+		h1 a { text-decoration: none }
+		h2 { font-size: 1.5em; color: #d2d96a; }
+    h3 { text-align: center; color: #d2d96a; }
+    a { color: #d2d96a; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    .download { float: right; }
+		pre { background: #000; color: #fff; padding: 15px;}
+    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
+    .footer { text-align:center; padding-top:30px; font-style: italic; }
+	</style>
+	
+</head>
+
+<body>
+  <a href="http://github.com/eatenbyagrue/entity_storage"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+  
+  <div id="container">
+
+    <div class="download">
+      <a href="http://github.com/eatenbyagrue/entity_storage/zipball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
+      <a href="http://github.com/eatenbyagrue/entity_storage/tarball/master">
+        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
+    </div>
+      
+    <h1><a href="http://github.com/eatenbyagrue/entity_storage">entity_storage</a> 
+      <span class="small">by <a href="http://github.com/eatenbyagrue">eatenbyagrue</a></span></h1>
+
+    <div class="description">
+      An easy to use Key/Value store for any Rails project. Designed to store config values and application wide state that needs to survive server restarts.
+    </div>
+
+    <p>You can use the entity store like so:
+
+    # Get key value. If it doesn't exist and is specified in default list, will be initialized and returned.
+    # If not in default list, will return nil.
+    e = EntityStore["testkey"]
+    e = EntityStore.testkey
+    e = EntityStore[:testkey]
+
+    # sets key named 'happened' to a Time object of now
+    EntityStore[:happened] = Time.now
+    EntityStore["happened"] = Time.now
+    EntityStore.happened = Time.now
+
+    # find out it's default, even if it's been changed
+    e = EntityStore.default(:testkey)
+
+    # set it back to default
+    EntityStore.default!(:testkey)
+
+    # delete an item
+    EntityStore.delete(key)
+
+All EntityStorage operations sync immediately with the database, so a server shutdown will not impact stored values.
+
+Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database. </p><h2>Dependencies</h2>
+<p>Requires ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.) </p>
+<h2>Install</h2>
+<p>To install from github:
+
+    Run the following if you haven't already:
+
+    gem sources -a http://gems.github.com
+
+    Install the gem(s):
+
+    sudo gem install eatenbyagrue-entity_storage
+
+Or download the souce above and run, customized for version and environment:
+
+    sudo gem install PATH/entity_storage.#.#.#.gem
+
+Put the following at the bottom of your environment.rb file, or in an initializer.
+
+    require 'entity_storage'
+    DEFAULT_KEYS = { "testkey" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false }
+    EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
+
+On initialization, if the table "entity_storage" doesn’t exist, it will be created. If you already have a table with that name, it must be in the correct format (previously created by this gem.)
+
+You can pass a hash full of default key/value pairs. If the application accesses one of the keys, and it doesn’t already exist, it will initiliaze that key with the default value. Good for getting your app to an intial starting state. </p>
+<h2>License</h2>
+<p>(The MIT License)
+
+Copyright © 2009 Joshua Siler
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED ‘AS IS’, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. </p>
+<h2>Authors</h2>
+<p>Joshua Siler (joshua.siler@gmail.com)<br/><br/>      </p>
+<h2>Contact</h2>
+<p> (joshua.siler@gmail.com)<br/>      </p>
+
+
+    <h2>Download</h2>
+    <p>
+      You can download this project in either
+      <a href="http://github.com/eatenbyagrue/entity_storage/zipball/master">zip</a> or
+      <a href="http://github.com/eatenbyagrue/entity_storage/tarball/master">tar</a> formats.
+    </p>
+    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
+      by running:
+      <pre>$ git clone git://github.com/eatenbyagrue/entity_storage</pre>
+    </p>
+      
+    <div class="footer">
+      get the source code on GitHub : <a href="http://github.com/eatenbyagrue/entity_storage">eatenbyagrue/entity_storage</a>
+    </div>
+    
+  </div>
+
+  
+</body>
+</html>
