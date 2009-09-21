@@ -9,26 +9,31 @@
 	
 	<style type="text/css">
 		body {
+			margin-left: 0px;
+			background-image: url(filecabinet.png);
+			background-repeat: no-repeat;
   		margin-top: 1.0em;
-  		background-color: #2d2695;
-		  font-family: "Helvetica,Arial,FreeSans"; 
-  		color: #ffffff;
+  		background-color: #FFF;
+		  font-family: "Georgia,Arial,FreeSans"; 
+  		color: #333;
     }
     #container {
-      margin: 0 auto;
+      margin-left: 250px;
       width: 700px;
     }
-		h1 { font-size: 3.8em; color: #d2d96a; margin-bottom: 3px; }
+		h1 { font-size: 3.8em;
+					color:#333; margin-bottom: 3px; }
 		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #d2d96a; }
-    h3 { text-align: center; color: #d2d96a; }
-    a { color: #d2d96a; }
+		h1 a { text-decoration: none; color: #30F; }
+		h2 { font-size: 1.5em; color: #333; }
+    h3 { text-align: center; color: #333; }
+    a { color: #333; }
     .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
     .download { float: right; }
 		pre { background: #000; color: #fff; padding: 15px;}
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
     .footer { text-align:center; padding-top:30px; font-style: italic; }
+		
 	</style>
 	
 </head>
@@ -45,24 +50,37 @@
         <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
     </div>
       
-    <h1><a href="http://github.com/eatenbyagrue/entity_storage">entity_storage</a> 
-      <span class="small">by <a href="http://github.com/eatenbyagrue">eatenbyagrue</a></span></h1>
+    <h1><a href="http://github.com/eatenbyagrue/entity_storage">Entity Storage</a></h1>
 
-    <div class="description">
-      An easy to use Key/Value store for any Rails project. Designed to store config values and application wide state that needs to survive server restarts.
-    </div>
+ <div id="readme" class="announce">
+<p>
+<a href="http://github.com/eatenbyagrue/entity_storage">github.com/eatenbyagrue/entity_storage</a>
 
-    <p>You can use the entity store like so:
-
-    # Get key value. If it doesn't exist and is specified in default list, will be initialized and returned.
-    # If not in default list, will return nil.
-    e = EntityStore["testkey"]
+</p>
+<p>
+An easy to use Key/Value store for any Ruby on Rails project. Like Memcache, only persistent.
+Stores config values &amp; application wide state in the database in order to
+survive server restarts.
+</p>
+<p><strong>Designed to allow you to add persistent value storage to any Rails project in about 5 minutes.</strong></p>
+<p>
+Additionally, allows users to set a list of default keys that
+auto-initializes baseline key/value pairs in the database for easy
+initialization.
+</p>
+<h2>SYNOPSIS:</h2>
+<p>
+You can use the entity store like so:
+</p>
+<pre>
+    # Get key value.
+    e = EntityStore[&quot;testkey&quot;]
     e = EntityStore.testkey
     e = EntityStore[:testkey]
 
     # sets key named 'happened' to a Time object of now
     EntityStore[:happened] = Time.now
-    EntityStore["happened"] = Time.now
+    EntityStore[&quot;happened&quot;] = Time.now
     EntityStore.happened = Time.now
 
     # find out it's default, even if it's been changed
@@ -73,14 +91,28 @@
 
     # delete an item
     EntityStore.delete(key)
+</pre>
+<p>
+All EntityStorage operations sync immediately with the database, so a
+server shutdown will not impact stored values.
+</p>
+<p>If you access a key that doesn't exist, and is specified in default list, will be initialized and returned. If not in default list, will return nil.</p>
+<p>
+Keys can be up to 512 characters in length. Values can be practically any
+size, and consist of any object. Objects are marshalled back and forth
+between database.
+</p>
+<h2>REQUIREMENTS:</h2>
+<p>
+Requires ActiveRecord 2.2.3 or above (probably works with earlier versions,
+but has not been tested.)
 
-All EntityStorage operations sync immediately with the database, so a server shutdown will not impact stored values.
-
-Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database. </p><h2>Dependencies</h2>
-<p>Requires ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.) </p>
-<h2>Install</h2>
-<p>To install from github:
-
+</p>
+<h2>INSTALL:</h2>
+<p>
+To install from github:
+</p>
+<pre>
     Run the following if you haven't already:
 
     gem sources -a http://gems.github.com
@@ -88,35 +120,72 @@ Keys can be up to 512 characters in length. Values can be practically any size, 
     Install the gem(s):
 
     sudo gem install eatenbyagrue-entity_storage
-
-Or download the souce above and run, customized for version and environment:
-
+</pre>
+<p>
+Or download the souce above and run, customized for version and
+environment:
+</p>
+<pre>
     sudo gem install PATH/entity_storage.#.#.#.gem
+</pre>
 
-Put the following at the bottom of your environment.rb file, or in an initializer.
-
+<p>
+Put the following at the bottom of your environment.rb file, or in an
+initializer.
+</p>
+<pre>
     require 'entity_storage'
-    DEFAULT_KEYS = { "testkey" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false }
+    DEFAULT_KEYS = { &quot;testkey&quot; =&gt; DateTime.parse(&quot;1-1-900&quot;), &quot;also test&quot; =&gt; 2 }
     EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
 
-On initialization, if the table "entity_storage" doesn’t exist, it will be created. If you already have a table with that name, it must be in the correct format (previously created by this gem.)
+</pre>
+<p>
+On initialization, if the table &quot;entity_storage&quot; doesn&#8217;t
+exist, it will be created. If you already have a table with that name, it
+must be in the correct format (previously created by this gem.)
+</p>
+<p>
+You can pass a hash full of default key/value pairs. If the application
+accesses one of the keys, and it doesn&#8217;t already exist, it will
+initiliaze that key with the default value. Good for getting your app to an
+intial starting state.
+</p>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
 
-You can pass a hash full of default key/value pairs. If the application accesses one of the keys, and it doesn’t already exist, it will initiliaze that key with the default value. Good for getting your app to an intial starting state. </p>
-<h2>License</h2>
-<p>(The MIT License)
+<p>
+Copyright &#169; 2009 Joshua Siler
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-Copyright © 2009 Joshua Siler
+</p>
+</div>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the ‘Software’), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED ‘AS IS’, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. </p>
 <h2>Authors</h2>
 <p>Joshua Siler (joshua.siler@gmail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p> (joshua.siler@gmail.com)<br/>      </p>
-
 
     <h2>Download</h2>
     <p>
