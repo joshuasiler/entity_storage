@@ -12,10 +12,8 @@ module EntityStorage
     
     # Checks for the existence of the necessary Entities table... if not here, creates it.
     def initialize(defaults={})
-      table_exists = false
-      ActiveRecord::Base.connection.execute("show tables like 'entity_storage'").each { |w| table_exists = true }
-      unless table_exists
-	AddEntitiesTable.up
+      unless ActiveRecord::Base.connection.table_exists?('entity_storage')
+				AddEntitiesTable.up
       end
 
       self.defaults = defaults
