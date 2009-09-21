@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{entity_storage}
-  s.version = "1.0.1"
+  s.version = "1.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Siler"]
-  s.date = %q{2009-09-20}
+  s.date = %q{2009-09-21}
   s.description = %q{An easy to use, persistent Key/Value store for any Ruby on Rails project. Designed to store config values & application wide state that need to survive server restarts.
 
 Additionally, allows users to set a list of default keys that auto-initiliazes baseline key/value pairs in the database for easy initialization.}
@@ -17,7 +17,7 @@ Additionally, allows users to set a list of default keys that auto-initiliazes b
   s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{entity_storage}
-  s.rubygems_version = %q{1.3.4}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{An easy to use, persistent Key/Value store for any Ruby on Rails project}
   s.test_files = ["test/test_entity_storage.rb", "test/test_helper.rb"]
 
