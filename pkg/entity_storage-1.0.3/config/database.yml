@@ -1,8 +1,8 @@
 
     adapter: mysql
-    database: 
+    database: careers
     username: root
-    password: 
+    password: bnjstyle
     host: localhost
 
 
