@@ -5,7 +5,7 @@ require 'rubygems'
 require 'activerecord'
 
 module EntityStorage
-  VERSION = '1.0.2'
+  VERSION = '1.0.3'
   
   class Storage
     attr_accessor :defaults
@@ -89,7 +89,7 @@ module EntityStorage
     def self.get_value(search_key,default_value)
       e = Entity.find_by_key(search_key.to_s)
       if e.nil?
-	e = initialize_value(search_key,default_value)
+				e = initialize_value(search_key,default_value)
       end
       e.value rescue nil
     end
@@ -98,7 +98,7 @@ module EntityStorage
     def self.set_value(search_key, new_value)
       e = Entity.find_by_key(search_key.to_s)
       if e.nil?
-	e = new
+				e = new
       end
       e.key = search_key
       e.value = new_value

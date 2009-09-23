@@ -1,11 +1,18 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
 
 class TestEntityStorage < Test::Unit::TestCase
-  DEFAULT_KEYS = { "test" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false }
+  DEFAULT_KEYS = { "test" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false,
+	# last time the hiring manager notifications have been run 
+  "new_applicant_last_run" => DateTime.parse("1-1-1900"),
+  # last time the new job notifications have been run 
+  "new_jobs_last_run" => DateTime.parse("1-1-1900"),
+  "email_test_address" => "joshuas@bnj.com" }
+  
   attr_accessor :entity_storage
   
   def setup
     ActiveRecord::Base.establish_connection(YAML::load(File.read(File.dirname(__FILE__) + '/../config/database.yml'))) unless ActiveRecord::Base.connected?
+    ActiveRecord::Base.connection.execute("delete from entity_storage")
     self.entity_storage ||= EntityStorage::Storage.new(DEFAULT_KEYS) 
   end
   
@@ -18,11 +25,13 @@ class TestEntityStorage < Test::Unit::TestCase
       e = self.entity_storage[key]
       assert_equal e, value
       
+      self.entity_storage.delete(key)
+      
       # set and try method missing access
       if key[/\w/] == key
-	eval("e = self.entity_storage."+key)
-	assert_equal e, value
-      end
+				eval("e = self.entity_storage."+key)
+				assert_equal e, value
+			end
       
       # change it to something else
       self.entity_storage[key] = Time.now.to_s
@@ -40,9 +49,9 @@ class TestEntityStorage < Test::Unit::TestCase
       
       # set it to something else using method missing
       if key[/\w/] == key
-	eval("e = self.entity_storage."+key +" = Time.now.to_s")
-	eval("e = self.entity_storage."+key)
-	assert_equal e, value
+				eval("e = self.entity_storage."+key +" = Time.now.to_s")
+				eval("e = self.entity_storage."+key)
+				assert_equal e, value
       end 
     }
   end
