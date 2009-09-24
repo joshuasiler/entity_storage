@@ -1,4 +1,5 @@
 require File.dirname(__FILE__) + '/test_helper.rb'
+ActiveRecord::Base.establish_connection(YAML::load(File.read(File.dirname(__FILE__) + '/../config/database.yml')))
 
 class TestEntityStorage < Test::Unit::TestCase
   DEFAULT_KEYS = { "test" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false,
@@ -9,48 +10,55 @@ class TestEntityStorage < Test::Unit::TestCase
   "email_test_address" => "joshuas@bnj.com" }
   
   attr_accessor :EntityStore
-  
+	EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
+	
   def setup
-    ActiveRecord::Base.establish_connection(YAML::load(File.read(File.dirname(__FILE__) + '/../config/database.yml'))) unless ActiveRecord::Base.connected?
     ActiveRecord::Base.connection.execute("delete from entity_storage")
-    EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS) if EntityStore.nil?
+  end
+  
+  def test_instantiation
+		# test nasty weird bug with underscore characters
+		entityStore2 = EntityStorage::Storage.new(DEFAULT_KEYS)
+		assert_equal entityStore2.email_test_address, 'joshuas@bnj.com'
   end
   
   # tests value setting and getting functionality, along with default creation  
   def test_defaultkeys
     DEFAULT_KEYS.each { |key,value| 
-      self.EntityStore.delete(key)
+      EntityStore.delete(key)
       
       # set key when it doesn't exist, should go to default
-      e = self.EntityStore[key]
+      e = EntityStore[key]
       assert_equal e, value
       
-      self.EntityStore.delete(key)
+      EntityStore.delete(key)
       
       # set and try method missing access
       if key[/\w/] == key
-				eval("e = self.EntityStore."+key)
+				eval("e = EntityStore."+key)
 				assert_equal e, value
 			end
       
       # change it to something else
-      self.EntityStore[key] = Time.now.to_s
-      e = self.EntityStore[key]
+      EntityStore[key] = Time.now.to_s
+      e = EntityStore[key]
       assert_not_equal e, value
       
       # find out it's default
-      e = self.EntityStore.default(key)
-      assert_not_equal e, value
+      e = EntityStore.default(key)
+      assert_equal e, value
+      
+      e = EntityStore.defaults[key]
+      assert_equal e, value
       
       # set it back to default
-      self.EntityStore.default!(key)
-      e = self.EntityStore[key]
+      EntityStore.default!(key)
+      e = EntityStore[key]
       assert_equal e, value
       
       # set it to something else using method missing
       if key[/\w/] == key
-				eval("e = self.EntityStore."+key +" = Time.now.to_s")
-				eval("e = self.EntityStore."+key)
+				eval("e = EntityStore."+key +" = Time.now.to_s")
 				assert_equal e, value
       end 
     }
@@ -58,41 +66,41 @@ class TestEntityStorage < Test::Unit::TestCase
   
   # tests setting values when no DEFAULT_KEY exists
   def test_settingvalues
-    self.EntityStore.delete('test')
+    EntityStore.delete('test')
     
     # key that can't be accessed via method missing
     # set value and check it
-    self.EntityStore['big long key that cannot be accessed via method missing'] = 'what up'
-    e = self.EntityStore['big long key that cannot be accessed via method missing']
+    EntityStore['big long key that cannot be accessed via method missing'] = 'what up'
+    e = EntityStore['big long key that cannot be accessed via method missing']
     assert_equal e, 'what up'
     
     # set another value and check it
-    self.EntityStore['big long key that cannot be accessed via method missing'] = 'another value'
-    e = self.EntityStore['big long key that cannot be accessed via method missing']
+    EntityStore['big long key that cannot be accessed via method missing'] = 'another value'
+    e = EntityStore['big long key that cannot be accessed via method missing']
     assert_equal e, 'another value'
     
-    self.EntityStore['test'] = 'what up'
-    e = self.EntityStore['test']
+    EntityStore['test'] = 'what up'
+    e = EntityStore['test']
     assert_equal e, 'what up'
     
-    self.EntityStore['test'] = 'another value'
-    e = self.EntityStore['test']
+    EntityStore['test'] = 'another value'
+    e = EntityStore['test']
     assert_equal e, 'another value'
     
     # try the method missing version of the tests
-    e = self.EntityStore.test = 'what up'
-    e = self.EntityStore.test
+    e = EntityStore.test = 'what up'
+    e = EntityStore.test
     assert_equal e, 'what up'
     
-    e = self.EntityStore.test = 'another value'
-    e = self.EntityStore.test
+    e = EntityStore.test = 'another value'
+    e = EntityStore.test
     assert_equal e, 'another value'
     
   end
   
   def test_getunknownvalue
-    self.EntityStore.delete('does not exist')
-    e = self.EntityStore['does not exist']
+    EntityStore.delete('does not exist')
+    e = EntityStore['does not exist']
     assert_nil e
   end
   

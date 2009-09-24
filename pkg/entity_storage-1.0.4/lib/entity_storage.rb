@@ -5,7 +5,7 @@ require 'rubygems'
 require 'activerecord'
 
 module EntityStorage
-  VERSION = '1.0.3'
+  VERSION = '1.0.4'
   
   class Storage
     attr_accessor :defaults
@@ -21,7 +21,7 @@ module EntityStorage
     
     # Read a value.
     def [](index)
-      Entity.get_value(index,defaults[index])
+      Entity.get_value(index,@defaults[index.to_s])
     end
     
     # Write a value.
@@ -37,23 +37,23 @@ module EntityStorage
     # Returns the default value of a key contained in DEFAULT_KEYS global constant.
     # Does not change the stored value. Use default! to reset the value.
     def default(index)
-      self.defaults[:index]
+      @defaults[index.to_s]
     end
   
     # Resets the default value of a key contained in DEFAULT_KEYS global constant and returns the value.
     def default!(index)
-      Entity.reset_value(index,defaults[index])
+      Entity.reset_value(index,@defaults[index.to_s])
     end
     
     # Allows EntityStorage[:whatever] to be accessed via EntityStorage.whatever.
     def method_missing(*args)
       if args.length == 1
-	  self[args[0]]
-	elsif args.length == 2 and args[0].to_s =~ /^(.*)=$/
-	  self[$1.intern] = args[1]
-	else
-	  super
-	end
+				self[args[0]]
+			elsif args.length == 2 and args[0].to_s =~ /^(.*)=$/
+				self[$1.intern] = args[1]
+			else
+			 super
+			end
     end
   end
   
@@ -88,7 +88,7 @@ module EntityStorage
     # If not found, will initialize according to defaults set in DEFAULT_KEYS global constant.
     def self.get_value(search_key,default_value)
       e = Entity.find_by_key(search_key.to_s)
-      if e.nil?
+      if e.nil? || e.value.nil?
 				e = initialize_value(search_key,default_value)
       end
       e.value rescue nil

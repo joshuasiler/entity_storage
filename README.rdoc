@@ -15,23 +15,26 @@ Additionally, allows users to set a list of default keys that auto-initializes b
 You can use the entity store like so:
      
     # Get key value. 
-    e = entity_storage["testkey"]
-    e = entity_storage.testkey
-    e = entity_storage[:testkey]
+    e = EntityStore["testkey"]
+    e = EntityStore.testkey
+    e = EntityStore[:testkey]
     
     # sets key named 'happened' to a Time object of now
-    entity_storage[:happened] = Time.now
-    entity_storage["happened"] = Time.now
-    entity_storage.happened = Time.now
+    EntityStore[:happened] = Time.now
+    EntityStore["happened"] = Time.now
+    EntityStore.happened = Time.now
     
     # find out it's default, even if it's been changed
-    e = entity_storage.default(:testkey)
+    e = EntityStore.default(:testkey)
+    
+    # or
+    e = EntityStore.defaults[:testkey]
    
     # set it back to default
-    entity_storage.default!(:testkey)
+    EntityStore.default!(:testkey)
     
     # delete an item
-    entity_storage.delete(key)
+    EntityStore.delete(key)
 
 All EntityStorage operations sync immediately with the database, so a server shutdown will not impact stored values.
 
@@ -62,7 +65,7 @@ Put the following at the bottom of your environment.rb file, or in an initialize
 
     require 'entity_storage'
     DEFAULT_KEYS = { "testkey" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false }
-    entity_storage = EntityStorage::Storage.new(DEFAULT_KEYS) 
+    EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS) 
 
 On initialization, if the table "entity_storage" doesn't exist, it will be created. If you already have a table with that name, it must be in the correct format (previously created by this gem.)
 
