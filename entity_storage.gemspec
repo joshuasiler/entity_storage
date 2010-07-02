@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{entity_storage}
-  s.version = "1.0.4"
+  s.version = "1.0.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Siler"]
@@ -18,7 +18,7 @@ Additionally, allows users to set a list of default keys that auto-initializes b
   s.homepage = %q{http://github.com/eatenbyagrue/entity_storage}
   s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{entity_storage}
+  s.rubyforge_project = %q{entity-storage}
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{An easy to use Key/Value store for any Ruby on Rails project}
   s.test_files = ["test/test_entity_storage.rb", "test/test_helper.rb"]
@@ -28,14 +28,15 @@ Additionally, allows users to set a list of default keys that auto-initializes b
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<activerecord>, [">= 2.2.2"])
+      s.add_runtime_dependency(%q<activerecord>, [">= 3.0.0.beta4"])
       s.add_development_dependency(%q<hoe>, [">= 2.3.3"])
     else
-      s.add_dependency(%q<activerecord>, [">= 2.2.2"])
+      s.add_dependency(%q<activerecord>, [">= 3.0.0.beta4"])
       s.add_dependency(%q<hoe>, [">= 2.3.3"])
     end
   else
-    s.add_dependency(%q<activerecord>, [">= 2.2.2"])
+    s.add_dependency(%q<activerecord>, [">= 3.0.0.beta4"])
     s.add_dependency(%q<hoe>, [">= 2.3.3"])
   end
+
 end

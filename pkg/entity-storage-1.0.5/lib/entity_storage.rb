@@ -2,10 +2,11 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
   
 require 'rubygems'
-require 'activerecord'
+require 'active_record'
+# require 'active_record/migration'
 
 module EntityStorage
-  VERSION = '1.0.4'
+  VERSION = '1.0.5'
   
   class Storage
     attr_accessor :defaults
@@ -13,7 +14,7 @@ module EntityStorage
     # Checks for the existence of the necessary Entities table... if not here, creates it.
     def initialize(defaults={})
       unless ActiveRecord::Base.connection.table_exists?('entity_storage')
-				AddEntitiesTable.up
+				AddEntitiesTable.create
       end
 
       self.defaults = defaults
@@ -59,12 +60,13 @@ module EntityStorage
   
   # This migration is required for EntityStorage to work correctly
   class AddEntitiesTable < ActiveRecord::Migration
-    def self.up
+		# up and down functions call broken code in Rail3 migrations gem, called it 'create'
+    def self.create
       create_table "entity_storage", :force => true do |t|
-	t.string   "key",        :limit => 512, :null => false
-	t.text     "value"
-	t.datetime "created_at"
-	t.datetime "updated_at"
+				t.string   "key",        :limit => 512, :null => false
+				t.text     "value"
+				t.datetime "created_at"
+				t.datetime "updated_at"
       end
     
       add_index "entity_storage", ["created_at"], :name => "created_at"
@@ -72,9 +74,9 @@ module EntityStorage
       add_index "entity_storage", ["updated_at"], :name => "updated_at"
     end
     
-    def self.down
-      drop_table :entities
-    end
+    #def self.down
+    #  drop_table :entities
+    #end
   end
   
   
@@ -84,7 +86,7 @@ module EntityStorage
     # Entities should be used via class methods and not instantiated directly.
     private_class_method :new
     
-    # Gets value based on specific key.
+    # Gets value based on specific key.`
     # If not found, will initialize according to defaults set in DEFAULT_KEYS global constant.
     def self.get_value(search_key,default_value)
       e = Entity.find_by_key(search_key.to_s)
