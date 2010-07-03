@@ -45,7 +45,7 @@ Keys can be up to 512 characters in length. Values can be practically any size, 
 == REQUIREMENTS:
 As of 1.0.5, requires ActiveRecord 3.0.0.beta4 or greater.
 
-Version up to 1.0.4 requires ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.)
+Version up to 1.0.4 requires Ruby 1.8.7 and ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.)
 
 == INSTALL:
 To install from github:

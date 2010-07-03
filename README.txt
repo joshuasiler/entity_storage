@@ -43,8 +43,9 @@ If you access a key that doesn't exist, and is specified in default list, will b
 Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database.
 
 == REQUIREMENTS:
+As of 1.0.5, requires ActiveRecord 3.0.0.beta4 or greater.
 
-Requires ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.)
+Requires Ruby 1.8.7 and ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.)
 
 == INSTALL:
 To install from github:

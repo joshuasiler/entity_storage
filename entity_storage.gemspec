@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{entity_storage}
-  s.version = "1.0.5"
+  s.version = "1.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Siler"]
@@ -18,6 +18,8 @@ Additionally, allows users to set a list of default keys that auto-initializes b
   s.homepage = %q{http://github.com/eatenbyagrue/entity_storage}
   s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
+  s.required_ruby_version = '>= 1.8.7'
+   
   s.rubyforge_project = %q{entity-storage}
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{An easy to use Key/Value store for any Ruby on Rails project}

@@ -6,7 +6,7 @@ require 'active_record'
 # require 'active_record/migration'
 
 module EntityStorage
-  VERSION = '1.0.5'
+  VERSION = '1.0.6'
   
   class Storage
     attr_accessor :defaults
