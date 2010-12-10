@@ -2,7 +2,7 @@
     adapter: mysql
     database: entity_test
     username: root
-    password: sillier2
+    password: bnjstyle
     host: localhost
 
 
