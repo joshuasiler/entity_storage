@@ -53,7 +53,7 @@ Version up to 1.0.4 requires Ruby 1.8.7 and ActiveRecord 2.2.3 or above (probabl
 
     sudo gem install entity-storage
 
-Or download the souce above and run, customized for version and environment:
+Or download the source above and run, customized for version and environment:
 
     sudo gem install PATH/entity_storage.#.#.#.gem
 
@@ -65,7 +65,7 @@ Put the following at the bottom of your environment.rb file, or in an initialize
 
 On initialization, if the table "entity_storage" doesn't exist, it will be created. If you already have a table with that name, it must be in the correct format (previously created by this gem.)
 
-You can pass a hash full of default key/value pairs. If the application accesses one of the keys, and it doesn't already exist, it will initiliaze that key with the default value. Good for getting your app to an intial starting state.
+You can pass a hash full of default key/value pairs. If the application accesses one of the keys, and it doesn't already exist, it will initiliaze that key with the default value. Good for getting your app to an initial starting state.
 
 
 == LICENSE:
