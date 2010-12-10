@@ -57,7 +57,7 @@ Or download the source above and run, customized for version and environment:
 
     sudo gem install PATH/entity_storage.#.#.#.gem
 
-Put the following at the bottom of your environment.rb file, or in an initializer.
+Put the following in an initializer file named RAILS_ROOT/config/initializers/entity_storage.rb
 
     require 'entity_storage'
     DEFAULT_KEYS = { "testkey" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false }
