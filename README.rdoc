@@ -13,26 +13,26 @@ Additionally, allows users to set a list of default keys that auto-initializes b
 == SYNOPSIS:
 
 You can use the entity store like so:
-     
-    # Get key value. 
+
+    # Get key value.
     e = EntityStore["testkey"]
     e = EntityStore.testkey
     e = EntityStore[:testkey]
-    
+
     # sets key named 'happened' to a Time object of now
     EntityStore[:happened] = Time.now
     EntityStore["happened"] = Time.now
     EntityStore.happened = Time.now
-    
+
     # find out it's default, even if it's been changed
     e = EntityStore.default(:testkey)
-    
+
     # or
     e = EntityStore.defaults[:testkey]
-   
+
     # set it back to default
     EntityStore.default!(:testkey)
-    
+
     # delete an item
     EntityStore.delete(key)
 
@@ -43,30 +43,25 @@ If you access a key that doesn't exist, and is specified in default list, will b
 Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database.
 
 == REQUIREMENTS:
-As of 1.0.5, requires ActiveRecord 3.0.0.beta4 or greater.
+As of 2.0.0, Rails 3.0.3 gems or above required.
 
 Version up to 1.0.4 requires Ruby 1.8.7 and ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.)
 
 == INSTALL:
-To install from github:
 
-    Run the following if you haven't already:
-    
-    gem sources -a http://gems.github.com
-    
     Install the gem(s):
-    
-    sudo gem install eatenbyagrue-entity_storage
+
+    sudo gem install entity_storage
 
 Or download the souce above and run, customized for version and environment:
 
-    sudo gem install PATH/entity_storage.#.#.#.gem 
+    sudo gem install PATH/entity_storage.#.#.#.gem
 
 Put the following at the bottom of your environment.rb file, or in an initializer.
 
     require 'entity_storage'
     DEFAULT_KEYS = { "testkey" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false }
-    EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS) 
+    EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
 
 On initialization, if the table "entity_storage" doesn't exist, it will be created. If you already have a table with that name, it must be in the correct format (previously created by this gem.)
 
@@ -77,7 +72,7 @@ You can pass a hash full of default key/value pairs. If the application accesses
 
 (The MIT License)
 
-Copyright (c) 2009 Joshua Siler
+Copyright (c) 2009, 2010, 2011 Joshua Siler
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
