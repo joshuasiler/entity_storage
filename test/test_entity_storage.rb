@@ -13,7 +13,7 @@ class TestEntityStorage < Test::Unit::TestCase
 	EntityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
 	
   def setup
-    ActiveRecord::Base.connection.execute("delete from entity_storage")
+    #ActiveRecord::Base.connection.execute("delete from entity_storage")
   end
   
   def test_instantiation
@@ -24,6 +24,7 @@ class TestEntityStorage < Test::Unit::TestCase
   
   # tests value setting and getting functionality, along with default creation  
   def test_defaultkeys
+		ActiveRecord::Base.connection.execute("delete from entity_storage")
     DEFAULT_KEYS.each { |key,value| 
       EntityStore.delete(key)
       
@@ -34,7 +35,7 @@ class TestEntityStorage < Test::Unit::TestCase
       EntityStore.delete(key)
       
       # set and try method missing access
-      if key[/\w/] == key
+			if key[/\w/] == key
 				eval("e = EntityStore."+key)
 				assert_equal e, value
 			end
@@ -58,7 +59,7 @@ class TestEntityStorage < Test::Unit::TestCase
       
       # set it to something else using method missing
       if key[/\w/] == key
-				eval("e = EntityStore."+key +" = Time.now.to_s")
+				eval("e = EntityStore." + key + " = Time.now.to_s")
 				assert_equal e, value
       end 
     }

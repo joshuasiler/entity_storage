@@ -17,8 +17,8 @@ $hoe = Hoe.spec 'entity-storage' do
   self.extra_deps         = [['activerecord','>= 3.0.3']]
 end
 
-require 'newgem/tasks'
-Dir['tasks/**/*.rake'].each { |t| load t }
+#require 'newgem/tasks'
+#Dir['tasks/**/*.rake'].each { |t| load t }
 
 # TODO - want other tests/tasks run by default? Add them to the list
 # remove_task :default

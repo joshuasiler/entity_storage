@@ -43,14 +43,14 @@ If you access a key that doesn't exist, and is specified in default list, will b
 Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database.
 
 == REQUIREMENTS:
+As of 2.1.0, the MySQL2 gem and Ruby 1.9.3 are now supported.
+
 As of 2.0.0, Rails 3.0.3 gems or above required.
 
 Version up to 1.0.4 requires Ruby 1.8.7 and ActiveRecord 2.2.3 or above (probably works with earlier versions, but has not been tested.)
 (earlier versions had an incorrect gem name, and are installed with 'gem install entity_storage')
 == INSTALL:
-Note: EntityStorage is not compatible with the Mysql2 gem, due to the requirement for binary transfer. 
-
-    Install the gem(s):
+Install the gem(s):
 
     sudo gem install entity_storage
 

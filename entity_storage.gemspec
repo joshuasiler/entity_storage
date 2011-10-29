@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{entity_storage}
-  s.version = "2.0.0"
+  s.version = "2.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Siler"]
-  s.date = %q{2010-12-10}
+  s.date = %q{2011-10-29}
   s.description = %q{An easy to use Key/Value store for any Ruby on Rails project. Like Memcache, only persistent. Stores config values &amp; application wide state in the database in order to survive server restarts.
 
 Designed to allow you to add persistent value storage to any Rails project in about 5 minutes.

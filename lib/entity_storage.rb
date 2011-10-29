@@ -9,18 +9,26 @@ require 'active_record'
 
 
 module EntityStorage
-  VERSION = '2.0.0'
+  VERSION = '2.1.0'
 
   class Storage
     attr_accessor :defaults
 
     # Checks for the existence of the necessary Entities table... if not here, creates it.
     def initialize(defaults={})
-      unless ActiveRecord::Base.connection.table_exists?('entity_storage')
+      if !ActiveRecord::Base.connection.table_exists?('entity_storage')
+				puts "Creating entity table..."
 				AddEntitiesTable.create
-      end
+			end
 
       self.defaults = defaults
+      
+      # this will need to be updated for future version changes
+      if self['ENTITY_STORAGE_MASTER_VERSION'].nil? || self['ENTITY_STORAGE_MASTER_VERSION']!='2.1.0'
+				self['ENTITY_STORAGE_MASTER_VERSION']='2.1.0'
+				puts "Migrating to new 2.1.0 binary format..."
+				ActiveRecord::Base.connection.execute("alter table entity_storage modify value blob")
+			end
     end
 
     # Read a value.
@@ -51,7 +59,7 @@ module EntityStorage
 
     # Allows EntityStorage[:whatever] to be accessed via EntityStorage.whatever.
     def method_missing(*args)
-      if args.length == 1
+			if args.length == 1
 				self[args[0]]
 			elsif args.length == 2 and args[0].to_s =~ /^(.*)=$/
 				self[$1.intern] = args[1]
@@ -68,7 +76,8 @@ module EntityStorage
     def self.create
       create_table "entity_storage", :force => true do |t|
 				t.string   "key",        :limit => 512, :null => false
-				t.text     "value"
+				#t.text     "value"
+				t.binary     "value"
 				t.datetime "created_at"
 				t.datetime "updated_at"
       end
@@ -78,11 +87,8 @@ module EntityStorage
       add_index "entity_storage", ["updated_at"], :name => "updated_at"
     end
 
-    #def self.down
-    #  drop_table :entities
-    #end
   end
-
+  
 
   class Entity < ActiveRecord::Base
     set_table_name "entity_storage"
