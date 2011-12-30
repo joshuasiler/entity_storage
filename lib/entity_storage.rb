@@ -9,7 +9,7 @@ require 'active_record'
 
 
 module EntityStorage
-  VERSION = '2.1.1'
+  VERSION = '2.1.2'
 
   class Storage
     attr_accessor :defaults
@@ -20,10 +20,9 @@ module EntityStorage
       if !ActiveRecord::Base.connection.table_exists?('entity_storage')
 				puts "Creating entity table..."
 				AddEntitiesTable.create
-        self['ENTITY_STORAGE_MASTER_VERSION']='2.1.1'
-			elsif self['ENTITY_STORAGE_MASTER_VERSION'].nil? 
-        self['ENTITY_STORAGE_MASTER_VERSION']='2.1.1'
-        old = false
+        self['ENTITY_STORAGE_MASTER_VERSION']='2.1.2'
+			elsif self['ENTITY_STORAGE_MASTER_VERSION'].nil? || self['ENTITY_STORAGE_MASTER_VERSION']!='2.1.2'
+        self['ENTITY_STORAGE_MASTER_VERSION']='2.1.2'
         ActiveRecord::Base.connection.execute("show columns from entity_storage").each {|p|
           if p[0] == "value" && p[1] != "blob"
             puts "Migrating to new 2.1.x binary format..."

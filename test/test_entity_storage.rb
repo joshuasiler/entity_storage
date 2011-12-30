@@ -31,17 +31,17 @@ class TestEntityStorage < Test::Unit::TestCase
     entityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
     ActiveRecord::Base.connection.execute("show columns from entity_storage").each {|p| 
        assert(p[1] == "blob") if p[0] == "value" }
-    assert entityStore['ENTITY_STORAGE_MASTER_VERSION']=='2.1.1'
+    assert entityStore['ENTITY_STORAGE_MASTER_VERSION']=='2.1.2'
 
     ActiveRecord::Base.connection.execute("delete from entity_storage")
     entityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
-    assert entityStore['ENTITY_STORAGE_MASTER_VERSION']=='2.1.1'
+    assert entityStore['ENTITY_STORAGE_MASTER_VERSION']=='2.1.2'
 
     ActiveRecord::Base.connection.execute("drop table entity_storage")
     entityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
     ActiveRecord::Base.connection.execute("show columns from entity_storage").each {|p| 
        assert(p[1] == "blob") if p[0] == "value" }
-    assert entityStore['ENTITY_STORAGE_MASTER_VERSION']=='2.1.1'
+    assert entityStore['ENTITY_STORAGE_MASTER_VERSION']=='2.1.2'
   end
   
   # tests value setting and getting functionality, along with default creation  
