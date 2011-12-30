@@ -21,6 +21,28 @@ class TestEntityStorage < Test::Unit::TestCase
 		entityStore2 = EntityStorage::Storage.new(DEFAULT_KEYS)
 		assert_equal entityStore2.email_test_address, 'joshuas@bnj.com'
   end
+
+   # tests migration from old type of table
+  def test_migration
+    ActiveRecord::Base.connection.execute("drop table entity_storage")
+    AddOldEntitiesTable.create
+    ActiveRecord::Base.connection.execute("show columns from entity_storage").each {|p| 
+       assert(p[1] == "text") if p[0] == "value" }
+    entityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
+    ActiveRecord::Base.connection.execute("show columns from entity_storage").each {|p| 
+       assert(p[1] == "blob") if p[0] == "value" }
+    assert entityStore['ENTITY_STORAGE_MASTER_VERSION']=='2.1.1'
+
+    ActiveRecord::Base.connection.execute("delete from entity_storage")
+    entityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
+    assert entityStore['ENTITY_STORAGE_MASTER_VERSION']=='2.1.1'
+
+    ActiveRecord::Base.connection.execute("drop table entity_storage")
+    entityStore = EntityStorage::Storage.new(DEFAULT_KEYS)
+    ActiveRecord::Base.connection.execute("show columns from entity_storage").each {|p| 
+       assert(p[1] == "blob") if p[0] == "value" }
+    assert entityStore['ENTITY_STORAGE_MASTER_VERSION']=='2.1.1'
+  end
   
   # tests value setting and getting functionality, along with default creation  
   def test_defaultkeys
@@ -106,3 +128,24 @@ class TestEntityStorage < Test::Unit::TestCase
   end
   
 end
+
+# old Version
+# This migration is required for EntityStorage to work correctly
+  class AddOldEntitiesTable < ActiveRecord::Migration
+    # up and down functions call broken code in Rail3 migrations gem, called it 'create'
+
+    def self.create
+      create_table "entity_storage", :force => true do |t|
+        t.string   "key",        :limit => 512, :null => false
+        t.text     "value"
+        #t.binary     "value"
+        t.datetime "created_at"
+        t.datetime "updated_at"
+      end
+
+      add_index "entity_storage", ["created_at"], :name => "created_at"
+      add_index "entity_storage", ["key"], :name => "key"
+      add_index "entity_storage", ["updated_at"], :name => "updated_at"
+    end
+
+  end

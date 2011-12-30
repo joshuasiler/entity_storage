@@ -20,16 +20,18 @@ module EntityStorage
       if !ActiveRecord::Base.connection.table_exists?('entity_storage')
 				puts "Creating entity table..."
 				AddEntitiesTable.create
-			elsif self['ENTITY_STORAGE_MASTER_VERSION'].nil? || (self['ENTITY_STORAGE_MASTER_VERSION']!='2.1.0' && self['ENTITY_STORAGE_MASTER_VERSION']!='2.1.1')
-        # this will need to be updated for future version changes
         self['ENTITY_STORAGE_MASTER_VERSION']='2.1.1'
-        puts "Migrating to new 2.1.x binary format..."
-        ActiveRecord::Base.connection.execute("alter table entity_storage modify value blob")
+			elsif self['ENTITY_STORAGE_MASTER_VERSION'].nil? 
+        self['ENTITY_STORAGE_MASTER_VERSION']='2.1.1'
+        old = false
+        ActiveRecord::Base.connection.execute("show columns from entity_storage").each {|p|
+          if p[0] == "value" && p[1] != "blob"
+            puts "Migrating to new 2.1.x binary format..."
+            ActiveRecord::Base.connection.execute("alter table entity_storage modify value blob")
+          end
+        }
       end
 
-      
-      
-     
     end
 
     # Read a value.
