@@ -27,6 +27,7 @@ module EntityStorage
           if p[0] == "value" && p[1] != "blob"
             puts "Migrating to new 2.1.x binary format..."
             ActiveRecord::Base.connection.execute("alter table entity_storage modify value blob")
+            break
           end
         }
       end
