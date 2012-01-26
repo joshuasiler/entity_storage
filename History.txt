@@ -1,3 +1,9 @@
+=== 2.0.3 2012-0126
+* Updated for Rails 3.2
+
+=== 2.1.2
+* Updated for Rails 3.1
+
 === 2.0.0 2010-12-10
 * Updated for Rails 3 compatibility
 

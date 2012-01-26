@@ -9,7 +9,7 @@ require 'active_record'
 
 
 module EntityStorage
-  VERSION = '2.1.2'
+  VERSION = '2.1.3'
 
   class Storage
     attr_accessor :defaults
@@ -94,7 +94,7 @@ module EntityStorage
   
 
   class Entity < ActiveRecord::Base
-    set_table_name "entity_storage"
+    self.table_name = "entity_storage"
 
     # Entities should be used via class methods and not instantiated directly.
     private_class_method :new
