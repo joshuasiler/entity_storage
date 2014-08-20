@@ -1,3 +1,6 @@
+=== 2.1.4 2012-0126
+* Updated for Ruby 2.1.2. Fixed bug with nil values
+
 === 2.0.3 2012-0126
 * Updated for Rails 3.2
 

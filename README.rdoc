@@ -43,6 +43,8 @@ If you access a key that doesn't exist, and is specified in default list, will b
 Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database.
 
 == REQUIREMENTS:
+As of 2.1.4, tested with Ruby 2.1.2.
+
 As of 2.1.0, the MySQL2 gem and Ruby 1.9.3 are now supported.
 
 As of 2.0.0, Rails 3.0.3 gems or above required.
@@ -73,7 +75,7 @@ You can pass a hash full of default key/value pairs. If the application accesses
 
 (The MIT License)
 
-Copyright (c) 2009, 2010, 2011 Joshua Siler
+Copyright (c) 2009-2014 Joshua Siler
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

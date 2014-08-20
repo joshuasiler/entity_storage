@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{entity_storage}
-  s.version = "2.1.3"
+  s.version = "2.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Joshua Siler"]
@@ -14,7 +14,7 @@ Designed to allow you to add persistent value storage to any Rails project in ab
 Additionally, allows users to set a list of default keys that auto-initializes baseline key/value pairs in the database for easy initialization.}
   s.email = ["joshua.siler@gmail.com"]
   s.extra_rdoc_files = ["History.txt", "Manifest.txt"]
-  s.files = ["History.txt", "Manifest.txt", "README.rdoc", "Rakefile", "lib/entity_storage.rb", "script/console", "script/destroy", "script/generate", "config/database.yml", "test/test_entity_storage.rb", "test/test_helper.rb"]
+  s.files = ["History.txt", "Manifest.txt", "README.rdoc", "Rakefile", "lib/entity_storage.rb", "script/console", "script/destroy", "script/generate", "config/database.yml", "test/test_entity_storage.rb"]
   s.homepage = %q{http://github.com/eatenbyagrue/entity_storage}
   s.rdoc_options = ["--main", "README.rdoc"]
   s.require_paths = ["lib"]
@@ -23,7 +23,7 @@ Additionally, allows users to set a list of default keys that auto-initializes b
   s.rubyforge_project = %q{entity-storage}
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{An easy to use Key/Value store for any Ruby on Rails project}
-  s.test_files = ["test/test_entity_storage.rb", "test/test_helper.rb"]
+  s.test_files = ["test/test_entity_storage.rb"]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

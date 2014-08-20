@@ -113,7 +113,7 @@ module EntityStorage
     def self.set_value(search_key, new_value)
       e = Entity.find_by_key(search_key.to_s)
       if new_value.nil? 
-        e.delete
+        Entity.where(key: search_key).delete_all
       else
         if e.nil?
   				e = new
