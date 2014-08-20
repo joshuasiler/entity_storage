@@ -112,12 +112,16 @@ module EntityStorage
     # Sets value for a specific key. If key doesn't exist, creates with value.
     def self.set_value(search_key, new_value)
       e = Entity.find_by_key(search_key.to_s)
-      if e.nil?
-				e = new
+      if new_value.nil? 
+        e.delete
+      else
+        if e.nil?
+  				e = new
+        end
+        e.key = search_key
+        e.value = new_value
+        e.save
       end
-      e.key = search_key
-      e.value = new_value
-      e.save
     end
 
     # Resets a key contained in DEFAULT_KEYS global constant to it's default value

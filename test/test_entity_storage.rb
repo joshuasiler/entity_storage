@@ -1,7 +1,12 @@
-require File.dirname(__FILE__) + '/test_helper.rb'
+require 'stringio'
+require 'minitest/autorun'
+
+require Dir.pwd + '/lib/entity_storage'
+
+
 ActiveRecord::Base.establish_connection(YAML::load(File.read(File.dirname(__FILE__) + '/../config/database.yml')))
 
-class TestEntityStorage < Test::Unit::TestCase
+class TestEntityStorage < Minitest::Unit::TestCase
   DEFAULT_KEYS = { "test" => DateTime.parse("1-1-900"), "also test" => 2, "long ass key that I probably wouldn't use" => false,
 	# last time the hiring manager notifications have been run 
   "new_applicant_last_run" => DateTime.parse("1-1-1900"),
@@ -16,6 +21,18 @@ class TestEntityStorage < Test::Unit::TestCase
     #ActiveRecord::Base.connection.execute("delete from entity_storage")
   end
   
+  def test_counts
+    # fix bug where reading null value inserts new record
+      #puts cnt
+      EntityStore["test"] = "item"
+      cnt = ActiveRecord::Base.connection.execute("select * from entity_storage").count
+      EntityStore["test"] = nil
+      EntityStore["test"]
+      #puts cnt
+      #puts ActiveRecord::Base.connection.execute("select * from entity_storage").count
+      assert cnt == ActiveRecord::Base.connection.execute("select * from entity_storage").count
+  end
+
   def test_instantiation
 		# test nasty weird bug with underscore characters
 		entityStore2 = EntityStorage::Storage.new(DEFAULT_KEYS)
@@ -65,7 +82,7 @@ class TestEntityStorage < Test::Unit::TestCase
       # change it to something else
       EntityStore[key] = Time.now.to_s
       e = EntityStore[key]
-      assert_not_equal e, value
+      assert e != value
       
       # find out it's default
       e = EntityStore.default(key)
