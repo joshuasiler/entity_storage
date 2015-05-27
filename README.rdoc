@@ -40,9 +40,11 @@ All EntityStorage operations sync immediately with the database, so a server shu
 
 If you access a key that doesn't exist, and is specified in default list, will be initialized and returned. If not in default list, will return nil.
 
-Keys can be up to 512 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database.
+Keys can be up to 250 characters in length. Values can be practically any size, and consist of any object. Objects are marshalled back and forth between database.
 
 == REQUIREMENTS:
+As of 2.1.5, key length reduced to allow indexing on MySQL 5.6
+
 As of 2.1.4, tested with Ruby 2.1.2.
 
 As of 2.1.0, the MySQL2 gem and Ruby 1.9.3 are now supported.
