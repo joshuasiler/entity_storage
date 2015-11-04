@@ -1,6 +1,6 @@
 = entity_storage
 
-http://github.com/eatenbyagrue/entity_storage
+http://github.com/joshuasiler/entity_storage
 
 == DESCRIPTION:
 
@@ -77,7 +77,7 @@ You can pass a hash full of default key/value pairs. If the application accesses
 
 (The MIT License)
 
-Copyright (c) 2009-2014 Joshua Siler
+Copyright (c) 2009-2015 Joshua Siler
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
