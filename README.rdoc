@@ -4,7 +4,7 @@ http://github.com/joshuasiler/entity_storage
 
 == DESCRIPTION:
 
-An easy to use Key/Value store for any Ruby on Rails project. Like Memcache, only persistent. Stores config values &amp; application wide state in the database in order to survive server restarts.
+An easy to use Key/Value store for any Ruby on Rails project. Like Memcache, only persistent. Stores config values and application wide state in the database in order to survive server restarts.
 
 Designed to allow you to add persistent value storage to any Rails project in about 5 minutes.
 
