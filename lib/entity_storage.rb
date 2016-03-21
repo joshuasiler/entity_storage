@@ -9,7 +9,7 @@ require 'active_record'
 
 
 module EntityStorage
-  VERSION = '2.1.5'
+  VERSION = '2.1.6'
 
   class Storage
     attr_accessor :defaults
@@ -78,7 +78,7 @@ module EntityStorage
 
     def self.create
       create_table "entity_storage", :force => true do |t|
-				t.string   "key",        :limit => 250, :null => false
+				t.string   "key",        :limit => 191, :null => false
 				#t.text     "value"
 				t.binary     "value"
 				t.datetime "created_at"

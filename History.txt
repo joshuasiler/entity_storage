@@ -1,3 +1,9 @@
+=== 2.1.6 2016-0321
+* Shortened key length to work with UTF8MB4 tables
+
+=== 2.1.5 2015-0527
+* Updated for MySQL 5.6 compatibility
+
 === 2.1.4 2012-0126
 * Updated for Ruby 2.1.2. Fixed bug with nil values
 

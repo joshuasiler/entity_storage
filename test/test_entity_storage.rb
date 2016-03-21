@@ -1,4 +1,5 @@
 require 'stringio'
+require 'minitest'
 require 'minitest/autorun'
 
 require Dir.pwd + '/lib/entity_storage'
