@@ -73,7 +73,7 @@ module EntityStorage
   end
 
   # This migration is required for EntityStorage to work correctly
-  class AddEntitiesTable < ActiveRecord::Migration
+  class AddEntitiesTable < ActiveRecord::Migration[4.2]
 		# up and down functions call broken code in Rail3 migrations gem, called it 'create'
 
     def self.create
